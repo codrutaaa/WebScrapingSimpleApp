@@ -9,7 +9,9 @@ soup = BeautifulSoup(res.text, 'html.parser') # ac e un html si vreau sa il pars
 links = soup.select('.titleline')
 subtext = soup.select('.subtext')
 
-# vrem sa luam doar
+def sort_stories_by_votes(hnlist):
+    return sorted(hnlist, key= lambda k:k['votes'], reverse=True) #sort the dict by votes
+
 def create_custom_hn(links, subtext):
 
     hn = [] #empty list
@@ -22,7 +24,7 @@ def create_custom_hn(links, subtext):
             # were problems because sometimes the links doesn't have votes
             if points > 99 :
                 hn.append({'title':title, 'link':href, 'votes':points})
-    return hn
+    return sort_stories_by_votes(hn)
 
 pprint.pprint(create_custom_hn(links, subtext))
 
